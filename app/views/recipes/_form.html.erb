@@ -16,12 +16,13 @@
     <%= form.text_field :title %>
   </div>
 
-  <%= form.fields_for :how_tos do |howto| %>
-    <div class="field">
-      <%= howto.label :how_to %>
+  <div class="field">
+    <%= form.label :how_tos, "作り方" %>
+    <%= form.fields_for :how_tos do |howto| %> 
       <%= howto.text_field :how_to %>
-    </div>
-  <% end%>
+    <% end %>  
+  </div>
+  
 
   <div class="actions">
     <%= form.submit %>
