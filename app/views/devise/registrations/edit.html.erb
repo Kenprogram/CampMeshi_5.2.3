@@ -1,7 +1,7 @@
 <div class='userEditPage'>
   <div class='header'>アカウント編集</div>
   <div class='container'>
-    <%= form_with current_user, url: registration_path(current_user) do |f| %>
+    <%= form_for current_user, url: registration_path(current_user) do |f| %>
       <div class="form-group">
         <%= f.label '名前' %>
         <%= f.text_field :name, class: "form-control" %>

@@ -12,8 +12,15 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :title %>
+    <%= form.label :title, "タイトル" %>
     <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :materials, "材料・分量" %>
+    <%= form.fields_for :materials do |material| %> 
+      <%= material.text_field :material %>
+    <% end %>  
   </div>
 
   <div class="field">
@@ -22,7 +29,6 @@
       <%= howto.text_field :how_to %>
     <% end %>  
   </div>
-  
 
   <div class="actions">
     <%= form.submit %>

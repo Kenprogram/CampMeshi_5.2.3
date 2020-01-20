@@ -15,6 +15,7 @@ class RecipesController < ApplicationController
   # GET /recipes/new
   def new
     @recipe = Recipe.new
+    @recipe.materials.build
     @recipe.how_tos.build
   end
 
@@ -72,6 +73,7 @@ class RecipesController < ApplicationController
     def recipe_params
       params.require(:recipe).permit(
         :title,
+        materials_attributes: [:id, :material, :_destroy],
         how_tos_attributes: [:id, :how_to, :_destroy]
       )
     end
