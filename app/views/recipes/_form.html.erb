@@ -17,17 +17,28 @@
   </div>
 
   <div class="field">
+    <%= form.label :category, "カテゴリー" %>
+    <%= form.select :category, Recipe.categories.keys, {}, {class: 'hoge' } %>
+  </div>
+
+  <div class="field">
     <%= form.label :materials, "材料・分量" %>
     <%= form.fields_for :materials do |material| %> 
-      <%= material.text_field :material %>
-    <% end %>  
+      <%= render 'material_fields', f: material %> 
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association "材料・分量を追加", form, :materials  %>
+    </div> 
   </div>
 
   <div class="field">
     <%= form.label :how_tos, "作り方" %>
     <%= form.fields_for :how_tos do |howto| %> 
-      <%= howto.text_field :how_to %>
-    <% end %>  
+      <%= render 'how_to_fields', f: howto %> 
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association "作り方の追加", form, :how_tos  %>
+    </div> 
   </div>
 
   <div class="actions">

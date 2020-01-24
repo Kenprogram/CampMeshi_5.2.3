@@ -29,11 +29,14 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'devise'
 
+
 gem 'bootstrap', '~> 4.1.3'
 gem 'jquery-rails' 
 gem 'font-awesome-sass'
 gem 'carrierwave', '~> 1.0'
 
+#ネストしたフォームを動的に追加削除機能
+gem 'cocoon'
 
 # Use ActiveStorage variant
 

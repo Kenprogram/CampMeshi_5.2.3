@@ -5,6 +5,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: root
+    volumes:
+      - ./var/lib/mysql:/usr/local/var/mysql
     ports:
       - "3306:3306"
 

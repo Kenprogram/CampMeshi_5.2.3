@@ -1,9 +1,30 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
+  <strong>タイトル:</strong>
   <%= @recipe.title %>
 </p>
 
-<%= link_to 'Edit', edit_recipe_path(@recipe) %> |
-<%= link_to 'Back', recipes_path %>
+<p>
+  <strong>カテゴリ:</strong>
+  <%= @recipe.category %>
+</p>
+
+<p>
+  <h3>材料</h3>
+  <% @recipe.materials.each do |material| %>
+    <div><%= material.material %></div>
+  <% end %>
+</p>
+
+<div>
+  <% @recipe.how_tos.each.with_index(1) do |howto, i| %>
+    <div>
+      <strong><%= "#{ i }"%>：</strong>
+      <%= howto.how_to %>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to 'レシピを編集する', edit_recipe_path(@recipe) %> |
+<%= link_to '戻る', recipes_path %>
