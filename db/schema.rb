@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_24_032525) do
+ActiveRecord::Schema.define(version: 2020_01_25_222632) do
 
   create_table "how_tos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "how_to"
@@ -28,11 +28,20 @@ ActiveRecord::Schema.define(version: 2020_01_24_032525) do
     t.index ["recipe_id"], name: "index_materials_on_recipe_id"
   end
 
+  create_table "reactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "to_recipe_id", null: false
+    t.integer "from_user_id", null: false
+    t.integer "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "recipes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category", default: 0, null: false
+    t.string "img_name_recipe", null: false
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

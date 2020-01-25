@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :recipes
   devise_for :users
-  root 'top#index'
+  root 'recipes#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :users, only: %i(index show)
+  resources :reactions, only: %i(create)
 end

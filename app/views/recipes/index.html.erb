@@ -1,27 +1,80 @@
-<p id="notice"><%= notice %></p>
+<div class="topPage">
+  <nav class="nav">
+    <ul>
+      <li class="personIcon"><%= link_to(content_tag(:i, "", class: 'fas fa-2x fa-user'), user_path(current_user.id)) %></li>
+      <li class="appIcon"><%= link_to image_tag(""), action: "index" %></li>
+    </ul>
+  </nav>
+  <div id="tinderslide">
+    <ul>
+      <% @recipes.each do |recipe| %>
+        <li data-recipe_id="<%= recipe.id %>">
+          <div class="recipeTitle"><%= recipe.title %></div>
+          <%= image_tag recipe.img_name_recipe.url(:thumb) %>
+          <div class="like"></div>
+          <div class="dislike"></div>
+        </li>
+      <% end %>
+    </ul>
+    <div class="noRecipe">レシピがありません</div>
+  </div>
+  <div class="actions" id="actionBtnArea">
+      <a href="#" class="dislike"><i class="fas fa-times fa-2x"></i></a>
+      <a href="#" class="like"><i class="fas fa-heart fa-2x"></i></a>
+  </div>
+</div>
+<script>
+  // スワイプするユーザー数の定数を定義
+  var usersNum = <%= @recipes.length %>
+  var currentUserIndex = 0;
+  var postReaction = function (user_id, reaction) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        }
+    });
+    $.ajax({
+      type: "POST",
+      url: "<%= reactions_path %>",
+      data: {
+        user_id: user_id,
+        reaction: reaction,
+      },
+      success: function(j_data){
+        console.log("success")
+      }
+    });
+  }
+  $("#tinderslide").jTinder({
+    onDislike: function (item) {
+      currentUserIndex++;
+      checkUserNum();
+      var user_id = item[0].dataset.user_id
+      postReaction(user_id, 'dislike')
+    },
+    onLike: function (item) {
+      currentUserIndex++;
+      checkUserNum();
+      var user_id = item[0].dataset.user_id
+      postReaction(user_id, 'like')
+    },
+    animationRevertSpeed: 200,
+    animationSpeed: 400,
+    threshold: 1,
+    likeSelector: '.like',
+    dislikeSelector: '.dislike'
+  });
+  $('.actions .like, .actions .dislike').click(function(e){
+    e.preventDefault();
+    $("#tinderslide").jTinder($(this).attr('class'));
+  });
 
-<h1>Recipes</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @recipes.each do |recipe| %>
-      <tr>
-        <td><%= recipe.title %></td>
-        <td><%= link_to 'Show', recipe %></td>
-        <td><%= link_to 'Edit', edit_recipe_path(recipe) %></td>
-        <td><%= link_to 'Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Recipe', new_recipe_path %>
+  function checkUserNum() {
+    // スワイプするユーザー数とスワイプした回数が同じになればaddClassする
+    if (currentUserIndex === usersNum){
+      $(".noRecipe").addClass("is-active");
+      $("#actionBtnArea").addClass("is-none")
+      return;
+    }
+  }
+</script>

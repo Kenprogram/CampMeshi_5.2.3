@@ -7,6 +7,8 @@ class Recipe < ApplicationRecord
 
   validates :title, length: { in: 1..30 }
 
+  mount_uploader :img_name_recipe, ImgNameRecipeUploader
+
   enum category: {
     肉: 0, 魚介: 1, 野菜: 2, ご飯: 3, パン: 4, 
     乳製品: 5, 卵: 6, その他: 7
